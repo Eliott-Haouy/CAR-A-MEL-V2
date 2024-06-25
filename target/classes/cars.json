@@ -1,0 +1,23 @@
+[
+	{
+		"brand": "RENAULT",
+		"model": "Mégane",
+		"horsePower": 90,
+		"registration": "AB-157-VG",
+		"created_at": "2024-06-16"
+	},
+	{
+		"brand": "CITROEN",
+		"model": "C3",
+		"horsePower": 82,
+		"registration": "BH-567-JK",
+		"created_at": "2024-06-16"
+	},
+	{
+		"brand": "OPEL",
+		"model": "Corsa",
+		"horsePower": 95,
+		"registration": "DF-123-MN",
+		"created_at": "2024-06-17"
+	}
+]
