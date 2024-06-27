@@ -11,13 +11,23 @@ public class Car {
 	public int horsePower;
 	public String registration;
 	public Date created_at;
+	public int iD;
 
-	public Car(BrandEnum brand, String model, int horsePower, String registration, Date created_at) {
+	public Car(BrandEnum brand, String model, int horsePower, String registration, Date created_at, int iD) {
 		this.brand = brand;
 		this.model = model;
 		this.horsePower = horsePower;
 		this.registration = registration;
 		this.created_at = created_at;
+		this.iD = iD;
+	}
+
+	public int getiD() {
+		return iD;
+	}
+
+	public void setiD(int iD) {
+		this.iD = iD;
 	}
 
 	public BrandEnum getBrand() {
@@ -61,7 +71,7 @@ public class Car {
 	}
 
 	public String toString() {
-		return "\t " + brand.name() + " | " + model + " | " + horsePower + " | " + registration + " | " + new Date();
+		return "\t " iD " | " + brand.name() + " | " + model + " | " + horsePower + " | " + registration + " | " + created_at;
 	}
 
 }
