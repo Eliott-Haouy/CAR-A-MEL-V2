@@ -112,62 +112,85 @@ public class CarService {
 	public List<Car> modifCar(Scanner scanner, List<Car> cars) {
 		System.out.println("Entrez l'id de la voiture que vous voulez modifier:");
 		int id = Integer.parseInt(scanner.nextLine());
-		
 		Car carToModif = null;
-		int index = 0;
+		int index = foundID(cars, id) ;
 		
+		carToModif = cars.get(index);
+	
+		if (carToModif != null) {
+			carToModif = modifBrand(scanner, carToModif);
+			carToModif = modifModel(scanner, carToModif);
+			carToModif = modifHorsePower(scanner, carToModif);
+			carToModif = modifRegistration(scanner, carToModif);
+	}
+		cars.set(index,carToModif);
+		saveListToFile(cars);
+		return cars;
+	}	
+	
+
+
+	private Car modifBrand(Scanner scanner, Car carToModif) {
+		System.out.println("Voulez vous modifier la marque ?" + "\nvous devez repondre par yes ou par no");
+		String userInput = scanner.nextLine();
+		if (userInput.equals("yes")) {
+
+			BrandEnum brand = null;
+			while (brand == null) {
+				System.out.println("La marque:");
+				String BrandName = scanner.nextLine();
+				brand = BrandEnum.findByValue(BrandName);
+				carToModif.setBrand(brand);
+				if (brand == null) {
+					System.out.println("Cette marque de voiture n'est pas acceptée dans notre parc automobile");
+				}
+			}
+		}return carToModif; 
+	}
+
+	private Car modifModel(Scanner scanner, Car carToModif) {
+		System.out.println("Voulez vous modifier le modèle ?" + "\nvous devez répondre par yes ou par no");
+		String userInput = scanner.nextLine();
+		if (userInput.equals("yes")) {
+
+			System.out.println("Le modèle:");
+			String model = scanner.nextLine();
+			carToModif.setModel(model);
+		}
+		return carToModif;
+	}
+
+	private Car modifHorsePower(Scanner scanner, Car carToModif) {
+		System.out.println("Voulez vous modifier la puissance ?" + "\nvous devez répondre par yes ou par no");
+		String userInput = scanner.nextLine();
+		if (userInput.equals("yes")) {
+			System.out.println("La puissance:");
+			int horsePower = Integer.parseInt(scanner.nextLine());
+			carToModif.setHorsePower(horsePower);
+		}
+		return carToModif;
+	}
+
+	private Car modifRegistration(Scanner scanner, Car carToModif) {
+		System.out.println(
+				"Voulez vous modifier la plaque d'immatriculation ?" + "\nvous devez répondre par yes ou par no");
+		String userInput = scanner.nextLine();
+		if (userInput.equals("yes")) {
+			System.out.println("La plaque d'immatriculation: ");
+			String registration = scanner.nextLine();
+			carToModif.setRegistration(registration);
+		}
+		return carToModif;
+	}
+
+	private int foundID(List<Car> cars, int id) {
+		int index = -1;
 		for (int i = 0; i < cars.size(); i++) {
 			if (cars.get(i).getid() == id) {
-				carToModif = cars.get(i);
 				index = i;
 				break;
 			}
 		}
-		
-		if (carToModif != null) {
-			System.out.println("Voulez vous modifier la marque ?" + "\nvous devez repondre par yes ou par no");
-			String userInput = scanner.nextLine();
-			if (userInput.equals("yes")) {
-
-				BrandEnum brand = null;
-				while (brand == null) {
-					System.out.println("La marque:");
-					String BrandName = scanner.nextLine();
-					brand = BrandEnum.findByValue(BrandName);
-					carToModif.setBrand(brand);
-					if (brand == null) {
-						System.out.println("Cette marque de voiture n'est pas acceptée dans notre parc automobile");
-					}
-				}
-
-			}
-			System.out.println("Voulez vous modifier le modèle ?" + "\nvous devez répondre par yes ou par no");
-			userInput = scanner.nextLine();
-			if (userInput.equals("yes")) {
-
-				System.out.println("Le modèle:");
-				String model = scanner.nextLine();
-				carToModif.setModel(model);
-			}
-			System.out.println("Voulez vous modifier la puissance ?"+ "\nvous devez répondre par yes ou par no");
-			userInput = scanner.nextLine();
-			if (userInput.equals("yes")) {
-
-				System.out.println("La puissance:");
-				int horsePower = Integer.parseInt(scanner.nextLine());
-				carToModif.setHorsePower(horsePower);
-			}
-			System.out.println("Voulez vous modifier la plaque d'immatriculation ?" + "\nvous devez répondre par yes ou par no");
-			userInput = scanner.nextLine();
-			if (userInput.equals("yes")) {
-
-				System.out.println("La plaque d'immatriculation: ");
-				String registration = scanner.nextLine();
-				carToModif.setRegistration(registration);
-			}
-			cars.set(index, carToModif);
-			saveListToFile(cars);
-		}
-		return cars;
+		return index;
 	}
 }
