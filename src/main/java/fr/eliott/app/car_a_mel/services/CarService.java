@@ -86,7 +86,7 @@ public class CarService {
 	}
 
 	public List<Car> deleteCar(Scanner scanner, List<Car> cars) {
-		System.out.println("Entrez l'id de la voiture que vous voulez supprimer:");
+		System.out.println("Entrez l'id de la voiture que vous voulez supprimer :");
 		int id = Integer.parseInt(scanner.nextLine());
 		Car carToDelete = null;
 		for (Car i : cars) {
@@ -103,7 +103,6 @@ public class CarService {
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = cars.get(i);
 			car.setid(i + 1);
-
 		}
 
 		saveListToFile(cars);
@@ -113,47 +112,62 @@ public class CarService {
 	public List<Car> modifCar(Scanner scanner, List<Car> cars) {
 		System.out.println("Entrez l'id de la voiture que vous voulez modifier:");
 		int id = Integer.parseInt(scanner.nextLine());
+		
 		Car carToModif = null;
-		for (Car i : cars) {
-			if (i.getid() == id) {
-				carToModif = i;
+		int index = 0;
+		
+		for (int i = 0; i < cars.size(); i++) {
+			if (cars.get(i).getid() == id) {
+				carToModif = cars.get(i);
+				index = i;
 				break;
-
 			}
 		}
+		
 		if (carToModif != null) {
 			System.out.println("Voulez vous modifier la marque ?" + "\nvous devez repondre par yes ou par no");
-			String yes = scanner.nextLine();
+			String userInput = scanner.nextLine();
+			if (userInput.equals("yes")) {
 
-			BrandEnum brand = null;
-			while (brand == null) {
-				System.out.println("La marque:");
-				String BrandName = scanner.nextLine();
-				brand = BrandEnum.findByValue(BrandName);
-				if (brand == null) {
-					System.out.println("Cette marque de voiture n'est pas accepté dans notre parc automobile");
+				BrandEnum brand = null;
+				while (brand == null) {
+					System.out.println("La marque:");
+					String BrandName = scanner.nextLine();
+					brand = BrandEnum.findByValue(BrandName);
+					carToModif.setBrand(brand);
+					if (brand == null) {
+						System.out.println("Cette marque de voiture n'est pas acceptée dans notre parc automobile");
+					}
 				}
+
 			}
-			System.out.println("Le modèle:");
-			String model = scanner.nextLine();
+			System.out.println("Voulez vous modifier le modèle ?" + "\nvous devez répondre par yes ou par no");
+			userInput = scanner.nextLine();
+			if (userInput.equals("yes")) {
 
-			System.out.println("La puissance:");
-			int horsePower = Integer.parseInt(scanner.nextLine());
+				System.out.println("Le modèle:");
+				String model = scanner.nextLine();
+				carToModif.setModel(model);
+			}
+			System.out.println("Voulez vous modifier la puissance ?"+ "\nvous devez répondre par yes ou par no");
+			userInput = scanner.nextLine();
+			if (userInput.equals("yes")) {
 
-			System.out.println("La plaque d'immatriculation: ");
-			String registration = scanner.nextLine();
+				System.out.println("La puissance:");
+				int horsePower = Integer.parseInt(scanner.nextLine());
+				carToModif.setHorsePower(horsePower);
+			}
+			System.out.println("Voulez vous modifier la plaque d'immatriculation ?" + "\nvous devez répondre par yes ou par no");
+			userInput = scanner.nextLine();
+			if (userInput.equals("yes")) {
+
+				System.out.println("La plaque d'immatriculation: ");
+				String registration = scanner.nextLine();
+				carToModif.setRegistration(registration);
+			}
+			cars.set(index, carToModif);
+			saveListToFile(cars);
 		}
-		saveListToFile(cars);
 		return cars;
-
 	}
-
 }
-
-/*
- * 3. si oui, lui demander ce qu'il veut modifier les composants de la voiture
- * 4. si il dit oui on modifie si non on garde les anciennes infos 5. écarser
- * les anciennes données de la voiture 6. mettre a jour la liste en modifiant la
- * voiture dans la liste
- * 
- */
