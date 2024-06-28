@@ -29,7 +29,6 @@ public class App {
 					carList = (ArrayList<Car>) carService.modifCar(scanner, carList);
 				} else if (userChoice == 4) {
 					carList = (ArrayList<Car>) carService.deleteCar(scanner, carList);
-
 				}
 
 				System.out.println("\n");

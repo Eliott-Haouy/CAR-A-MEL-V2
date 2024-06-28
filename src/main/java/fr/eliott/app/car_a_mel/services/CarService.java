@@ -17,11 +17,16 @@ import com.google.gson.stream.JsonReader;
 import fr.eliott.app.car_a_mel.models.entities.Car;
 import fr.eliott.app.car_a_mel.models.enums.BrandEnum;
 
+
 public class CarService {
 
 	private static final String CARS_JSON_PATH = "src/main/resources/cars.json";
 	private static final Gson GSON = new GsonBuilder().setDateFormat("MM dd yyyy").create();
 
+	/**
+	 * 
+	 * @param carList : liste de voitures
+	 */
 	public void showCarList(ArrayList<Car> carList) {
 		System.out.println(
 				"\tID | Marque | Modèle | puissance | plaque d’immatriculation | date d’entrée dans le parc.\r\n" + "");
@@ -29,7 +34,10 @@ public class CarService {
 			System.out.println(car.toString());
 		}
 	}
-
+/**
+ * 
+ * @addCarAndSaveFile ajouter et sauvegarder une voiture
+ */
 	public List<Car> addCarAndSaveFile(Scanner scanner, List<Car> cars) {
 		Car newCar = addCar(scanner);
 		newCar.setid(cars.size() + 1);
@@ -37,7 +45,10 @@ public class CarService {
 		saveListToFile(cars);
 		return cars;
 	}
-
+/**
+ * 
+ * @addCar ajouter une voiture à la liste
+ */
 	private Car addCar(Scanner scanner) {
 		BrandEnum brand = null;
 		while (brand == null) {
@@ -59,7 +70,10 @@ public class CarService {
 
 		return new Car(brand, model, horsePower, registration, new Date());
 	}
-
+/**
+ * 
+ * @retieveCarsFromFile retrouver les voitures dans le fichier JSON
+ */
 	public List<Car> retrieveCarsFromFile() {
 		ArrayList<Car> cars = new ArrayList<>();
 		try {
@@ -84,7 +98,10 @@ public class CarService {
 		}
 
 	}
-
+/**
+ * 
+ * @deleteCar supprimer une voiture de la liste 
+ */
 	public List<Car> deleteCar(Scanner scanner, List<Car> cars) {
 		System.out.println("Entrez l'id de la voiture que vous voulez supprimer :");
 		int id = Integer.parseInt(scanner.nextLine());
@@ -108,7 +125,10 @@ public class CarService {
 		saveListToFile(cars);
 		return cars;
 	}
-
+/**
+ * 
+ * @modifCar modifier une voiture choisit de la liste 
+ */
 	public List<Car> modifCar(Scanner scanner, List<Car> cars) {
 		System.out.println("Entrez l'id de la voiture que vous voulez modifier:");
 		int id = Integer.parseInt(scanner.nextLine());
@@ -129,7 +149,11 @@ public class CarService {
 	}	
 	
 
-
+/**
+ * 
+ * @carToModif voiture a modifier
+ * @modifBrand modifier la marque 
+ */
 	private Car modifBrand(Scanner scanner, Car carToModif) {
 		System.out.println("Voulez vous modifier la marque ?" + "\nvous devez repondre par yes ou par no");
 		String userInput = scanner.nextLine();
@@ -147,7 +171,10 @@ public class CarService {
 			}
 		}return carToModif; 
 	}
-
+/**
+ * 
+ * @modifModel modifier le model 
+ */
 	private Car modifModel(Scanner scanner, Car carToModif) {
 		System.out.println("Voulez vous modifier le modèle ?" + "\nvous devez répondre par yes ou par no");
 		String userInput = scanner.nextLine();
@@ -159,7 +186,10 @@ public class CarService {
 		}
 		return carToModif;
 	}
-
+/**
+ * 
+ *@modifHorsePower modifier la puissance 
+ */
 	private Car modifHorsePower(Scanner scanner, Car carToModif) {
 		System.out.println("Voulez vous modifier la puissance ?" + "\nvous devez répondre par yes ou par no");
 		String userInput = scanner.nextLine();
@@ -170,7 +200,10 @@ public class CarService {
 		}
 		return carToModif;
 	}
-
+	/**
+	 * @modifRegistration modifier la plaque d'immatriculation 
+	 *
+	 */
 	private Car modifRegistration(Scanner scanner, Car carToModif) {
 		System.out.println(
 				"Voulez vous modifier la plaque d'immatriculation ?" + "\nvous devez répondre par yes ou par no");
@@ -182,7 +215,10 @@ public class CarService {
 		}
 		return carToModif;
 	}
-
+/**
+ * 
+ * @foundID trouver si l'ID existe dans la liste
+ */
 	private int foundID(List<Car> cars, int id) {
 		int index = -1;
 		for (int i = 0; i < cars.size(); i++) {
