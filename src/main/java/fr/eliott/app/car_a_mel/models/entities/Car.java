@@ -6,28 +6,36 @@ import fr.eliott.app.car_a_mel.models.enums.BrandEnum;
 
 public class Car {
 
-	public BrandEnum brand;
-	public String model;
-	public int horsePower;
-	public String registration;
-	public Date created_at;
-	public int iD;
+	private BrandEnum brand;
+	private String model;
+	private int horsePower;
+	private String registration;
+	private Date created_at;
+	private int id;
 
-	public Car(BrandEnum brand, String model, int horsePower, String registration, Date created_at, int iD) {
+	public Car(BrandEnum brand, String model, int horsePower, String registration, Date created_at) {
 		this.brand = brand;
 		this.model = model;
 		this.horsePower = horsePower;
 		this.registration = registration;
 		this.created_at = created_at;
-		this.iD = iD;
 	}
 
-	public int getiD() {
-		return iD;
+	public Car(BrandEnum brand, String model, int horsePower, String registration, Date created_at, int id) {
+		this.brand = brand;
+		this.model = model;
+		this.horsePower = horsePower;
+		this.registration = registration;
+		this.created_at = created_at;
+		this.id = id;
 	}
 
-	public void setiD(int iD) {
-		this.iD = iD;
+	public int getid() {
+		return id;
+	}
+
+	public void setid(int id) {
+		this.id = id;
 	}
 
 	public BrandEnum getBrand() {
@@ -71,7 +79,8 @@ public class Car {
 	}
 
 	public String toString() {
-		return "\t " iD " | " + brand.name() + " | " + model + " | " + horsePower + " | " + registration + " | " + created_at;
+		return "\t " + id + " | " + brand.name() + " | " + model + " | " + horsePower + " | " + registration + " | "
+				+ created_at;
 	}
 
 }

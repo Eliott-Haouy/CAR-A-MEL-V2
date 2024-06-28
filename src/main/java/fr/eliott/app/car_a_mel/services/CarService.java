@@ -32,15 +32,10 @@ public class CarService {
 
 	public List<Car> addCarAndSaveFile(Scanner scanner, List<Car> cars) {
 		Car newCar = addCar(scanner);
+		newCar.setid(cars.size() + 1);
 		cars.add(newCar);
 		saveListToFile(cars);
 		return cars;
-	}
-	
-	private int iD() {
-		int iD= 1;
-		return iD++;
-		
 	}
 
 	private Car addCar(Scanner scanner) {
@@ -61,10 +56,8 @@ public class CarService {
 
 		System.out.println("La plaque d'immatriculation: ");
 		String registration = scanner.nextLine();
-		
 
-		
-		return new Car(iD, brand, model, horsePower, registration, new Date());
+		return new Car(brand, model, horsePower, registration, new Date());
 	}
 
 	public List<Car> retrieveCarsFromFile() {
@@ -91,6 +84,76 @@ public class CarService {
 		}
 
 	}
-	 
-	
+
+	public List<Car> deleteCar(Scanner scanner, List<Car> cars) {
+		System.out.println("Entrez l'id de la voiture que vous voulez supprimer:");
+		int id = Integer.parseInt(scanner.nextLine());
+		Car carToDelete = null;
+		for (Car i : cars) {
+			if (i.getid() == id) {
+				carToDelete = i;
+				break;
+			}
+		}
+
+		if (carToDelete != null) {
+			cars.remove(carToDelete);
+		}
+
+		for (int i = 0; i < cars.size(); i++) {
+			Car car = cars.get(i);
+			car.setid(i + 1);
+
+		}
+
+		saveListToFile(cars);
+		return cars;
+	}
+
+	public List<Car> modifCar(Scanner scanner, List<Car> cars) {
+		System.out.println("Entrez l'id de la voiture que vous voulez modifier:");
+		int id = Integer.parseInt(scanner.nextLine());
+		Car carToModif = null;
+		for (Car i : cars) {
+			if (i.getid() == id) {
+				carToModif = i;
+				break;
+
+			}
+		}
+		if (carToModif != null) {
+			System.out.println("Voulez vous modifier la marque ?" + "\nvous devez repondre par yes ou par no");
+			String yes = scanner.nextLine();
+
+			BrandEnum brand = null;
+			while (brand == null) {
+				System.out.println("La marque:");
+				String BrandName = scanner.nextLine();
+				brand = BrandEnum.findByValue(BrandName);
+				if (brand == null) {
+					System.out.println("Cette marque de voiture n'est pas accepté dans notre parc automobile");
+				}
+			}
+			System.out.println("Le modèle:");
+			String model = scanner.nextLine();
+
+			System.out.println("La puissance:");
+			int horsePower = Integer.parseInt(scanner.nextLine());
+
+			System.out.println("La plaque d'immatriculation: ");
+			String registration = scanner.nextLine();
+		}
+		saveListToFile(cars);
+		return cars;
+
+	}
+
 }
+
+/*
+ * 3. si oui, lui demander ce qu'il veut modifier les composants de la voiture
+ * 4. si il dit oui on modifie si non on garde les anciennes infos 5. écarser
+ * les anciennes données de la voiture 6. mettre a jour la liste en modifiant la
+ * voiture dans la liste
+ * 
+ */
